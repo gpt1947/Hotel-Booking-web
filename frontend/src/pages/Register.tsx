@@ -23,9 +23,11 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<RegisterFormData>();
-
+  // console.log(register);
+  
   const mutation = useMutation(apiClient.register, {
     onSuccess: async () => {
+      console.log("abcd")
       showToast({ message: "Registration Success!", type: "SUCCESS" });
       await queryClient.invalidateQueries("validateToken");
       navigate("/");

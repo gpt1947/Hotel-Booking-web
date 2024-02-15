@@ -1,4 +1,6 @@
-import express, { Request, Response } from "express";
+ import express, { Request, Response } from "express";
+// import express from "express";
+
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -17,12 +19,15 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string);
+mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(()=> console.log("connected to database")
+).catch((err) => console.log(err)
+);
 
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+console.log(process.env.FRONTEND_URL)
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,

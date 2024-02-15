@@ -20,6 +20,7 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
 };
 
 export const register = async (formData: RegisterFormData) => {
+  console.log(API_BASE_URL)
   const response = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
     credentials: "include",
@@ -28,9 +29,9 @@ export const register = async (formData: RegisterFormData) => {
     },
     body: JSON.stringify(formData),
   });
-
+  // console.log(response)
   const responseBody = await response.json();
-
+  // console.log(responseBody)
   if (!response.ok) {
     throw new Error(responseBody.message);
   }
