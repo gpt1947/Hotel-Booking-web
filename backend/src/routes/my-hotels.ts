@@ -5,6 +5,9 @@ import Hotel from "../models/hotel";
 import verifyToken from "../middleware/auth";
 import { body } from "express-validator";
 import { HotelType } from "../shared/types";
+import { useQuery } from 'react-query';
+// import {uploadOnCloudinary} from "../utils/cloudinary.ts"
+
 
 const router = express.Router();
 
@@ -39,19 +42,20 @@ router.post(
     try {
       const imageFiles = req.files as Express.Multer.File[];
       const newHotel: HotelType = req.body;
-
+      console.log("count 1");
       const imageUrls = await uploadImages(imageFiles);
-
+      // const imageUrls='fjhewfjndjzvn';
+      console.log("count 2");
       newHotel.imageUrls = imageUrls;
       newHotel.lastUpdated = new Date();
       newHotel.userId = req.userId;
-
+      console.log('count 3')
       const hotel = new Hotel(newHotel);
       await hotel.save();
 
       res.status(201).send(hotel);
     } catch (e) {
-      console.log(e);
+      console.log("raghav");
       res.status(500).json({ message: "Something went wrong" });
     }
   }
@@ -124,7 +128,7 @@ async function uploadImages(imageFiles: Express.Multer.File[]) {
     const res = await cloudinary.v2.uploader.upload(dataURI);
     return res.url;
   });
-
+   
   const imageUrls = await Promise.all(uploadPromises);
   return imageUrls;
 }

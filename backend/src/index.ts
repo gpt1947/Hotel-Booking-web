@@ -1,6 +1,6 @@
  import express, { Request, Response } from "express";
 // import express from "express";
-
+import connectDB from "./db/iindex";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
@@ -19,9 +19,21 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-mongoose.connect(process.env.MONGODB_CONNECTION_STRING as string).then(()=> console.log("connected to database")
-).catch((err) => console.log(err)
+mongoose.connect(process.env.MONGODB_URL as string).then(()=> console.log("connected to database")
+).catch((err) => console.log("hello boys ")
 );
+
+console.log(`port name : ${process.env.PORT}`);
+// connectDB()
+// .then(() => {
+//     app.listen(process.env.PORT || 7000, () => {
+//         console.log(`⚙️ Server is running at port : ${process.env.PORT}`);
+//     })
+// })
+// .catch((err) => {
+//     console.log("MONGO db connection failed !!! ", err);
+// })
+
 
 const app = express();
 app.use(cookieParser());
@@ -47,6 +59,6 @@ app.get("*", (req: Request, res: Response) => {
   res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
 });
 
-app.listen(7000, () => {
-  console.log("server running on localhost:7000");
-});
+// app.listen(7000, () => {
+//   console.log("server running on localhost:7000");
+// });

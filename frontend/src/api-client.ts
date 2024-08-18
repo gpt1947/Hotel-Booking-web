@@ -7,7 +7,8 @@ import {
   UserType,
 } from "../../backend/src/shared/types";
 import { BookingFormData } from "./forms/BookingForm/BookingForm";
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
+const API_BASE_URL = "http://localhost:5000";
 
 export const fetchCurrentUser = async (): Promise<UserType> => {
   const response = await fetch(`${API_BASE_URL}/api/users/me`, {
@@ -16,18 +17,20 @@ export const fetchCurrentUser = async (): Promise<UserType> => {
   if (!response.ok) {
     throw new Error("Error fetching user");
   }
+
   return response.json();
 };
 
 export const register = async (formData: RegisterFormData) => {
   console.log(API_BASE_URL)
+  console.log("hello world");
   const response = await fetch(`${API_BASE_URL}/api/users/register`, {
     method: "POST",
     credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(formData),
+    body: JSON.stringify(formData), 
   });
   // console.log(response)
   const responseBody = await response.json();
